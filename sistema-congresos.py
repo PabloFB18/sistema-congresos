@@ -1,26 +1,25 @@
-from tkinter import Tk, BOTH
-from tkinter.ttk import Frame
-import Controlador
+#!/usr/bin/python3.6
+# -*- coding: utf-8 -*-
 
-
-class Example(Frame):
-    def __init__(self):
-        super().__init__()
-
-        self.initUI()
-
-    def initUI(self):
-        self.master.title("Simple")
-        self.pack(fill=BOTH, expand=1)
+import tkinter as tk
+import controlador
+from views import invitado_view, congreso_view, crear_congreso_view, congresos_view
+from views.congresos_view import CongresosView
 
 
 def main():
-    root = Tk()
-    root.geometry("250x150+300+300")
-    app = Example()
+
+    if not controlador.check_base_datos():
+        controlador.crear_tablas_base_datos()
+
+    congresos = controlador.get_congresos()
+
+    root = tk.Tk()
+    app = CongresosView(root, congresos)
     root.mainloop()
+    #
+    # congresos_view.crear(congresos)
 
 
 if __name__ == '__main__':
     main()
-
